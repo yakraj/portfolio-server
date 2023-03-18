@@ -41,6 +41,7 @@ const db = knex({
     database: "postgres",
   },
 });
+
 // create table mega_projects(id serial primary key,title text,description text,url text,date text,images text [],tags text, projectid text,post_type varchar(10))
 // const db = knex({
 //   client: "pg",
@@ -57,6 +58,14 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static(path.resolve("./public")));
+
+function ignoreFavicon(req, res, next) {
+  if (req.originalUrl.includes("favicon.ico")) {
+    res.status(204).end();
+  }
+  next();
+}
+app.use(ignoreFavicon);
 
 // from here i am using code from clever cloud documentation
 
