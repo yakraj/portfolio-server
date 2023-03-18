@@ -55,21 +55,22 @@ function ignoreFavicon(req, res, next) {
 app.use(ignoreFavicon);
 
 app.get("/", (req, res) => {
-  var data = [];
-  axios
-    .get("https://ipinfo.io/json?token=ca553a36187af5")
-    .then(function (response) {
-      db("information")
-        .insert({
-          country: response.data.country,
-          region: response.data.region,
-          data: [response.data],
-        })
-        .then((ress) => {
-          res.json(response.data);
-        });
-    });
+  // axios
+  //   .get("https://ipinfo.io/json?token=ca553a36187af5")
+  //   .then(function (response) {
+  //     db("information")
+  //       .insert({
+  //         country: response.data.country,
+  //         region: response.data.region,
+  //         data: [response.data],
+  //       })
+  //       .then((ress) => {
+  //         res.json(response.data);
+  //       });
+  //   });
   // res.json("working well");
+
+  res.json(req.ip);
 });
 
 app.post("/create/smallproject", (req, res) => {
