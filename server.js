@@ -16,30 +16,29 @@ cloudinary.config({
 });
 // here we will verify our database is
 
-// that is time to define server configuration
-
-const db = knex({
-  client: "pg",
-  connection: {
-    host: "127.0.0.1",
-    user: "postgres",
-    password: "yakraj",
-    database: "postgres",
-  },
-});
-// hello there
-// create table mega_projects(id serial primary key,title text,description text,url text,date text,images text [],tags text, projectid text,post_type varchar(10))
+// that is time to define database configuration
+// this is local database for trial base
 // const db = knex({
 //   client: "pg",
 //   connection: {
-//     host: "bppitvhyuob0u5nzoy8i-postgresql.services.clever-cloud.com",
-//     user: "u2gmxdylg4erjg8gxhmi",
-//     password: "Ne1k1OSpUMcjMT2RMtaWklACQOuErn",
-//     database: "bppitvhyuob0u5nzoy8i",
+//     host: "127.0.0.1",
+//     user: "postgres",
+//     password: "yakraj",
+//     database: "postgres",
 //   },
 // });
-//  now we have defined database connection
 
+// create table mega_projects(id serial primary key,title text,description text,url text,date text,images text [],tags text, projectid text,post_type varchar(10))
+const db = knex({
+  client: "pg",
+  connection: {
+    host: "bppitvhyuob0u5nzoy8i-postgresql.services.clever-cloud.com",
+    user: "u2gmxdylg4erjg8gxhmi",
+    password: "Ne1k1OSpUMcjMT2RMtaWklACQOuErn",
+    database: "bppitvhyuob0u5nzoy8i",
+  },
+});
+//  now we have defined database connection
 const app = express();
 const server = http.Server(app);
 app.use(bodyParser.json());
@@ -55,42 +54,31 @@ function ignoreFavicon(req, res, next) {
 }
 app.use(ignoreFavicon);
 
-// from here i am using code from clever cloud documentation
-
-// until here i am using code from clever cloud
-
-// here we can make requests
-
 app.get("/", (req, res) => {
   var data = [];
   axios
-    .get("https://www.ipinfo.io/106.216.254.229?token=ca553a36187af5")
+    .get("https://ipinfo.io/json?token=ca553a36187af5")
     .then(function (response) {
-      res.json([response.data]);
+      db("information")
+        .insert({ data: [response.data] })
+        .then((ress) => {
+          res.end();
+        });
     });
-
-  // res.json("hi there");
-  // console.log(data);
-  // fetch("https://quotes.toscrape.com/random")
-  //   .then((response) => response.text())
-  //   .then((body) => {
-  //     res.json(body);
-  //   });
+  // res.json("working well");
 });
 
 app.post("/create/smallproject", (req, res) => {
-  var { title, desc, url, thumbnail, format, post_type } = req.body;
-  var adid = uniqid(title, new Date());
+  var { title, description, url, thumbnail } = req.body;
+  var adid = uniqid(title);
   db("small_projects")
     .insert({
       title: title,
-      description: desc,
+      description: description,
       url: url,
       date: new Date(),
       thumbnail: thumbnail,
       projectid: adid,
-      thumb_format: format,
-      post_type: post_type,
     })
     .then((response) => {
       res.json("successfully created");
@@ -100,7 +88,6 @@ app.post("/create/smallproject", (req, res) => {
 app.get("/favicon.ico", (req, res) => res.status(204));
 
 app.get("/smallproject", (req, res) => {
-  console.log(req);
   db("small_projects")
     .select("*")
     .then((response) => res.json(response));
@@ -111,20 +98,17 @@ app.get("/megaproject", (req, res) => {
     .then((response) => res.json(response));
 });
 app.post("/create/megaproject", (req, res) => {
-  var { title, desc, url, format, tags, images, post_type } = req.body;
-
+  var { title, description, url, tech, images } = req.body;
   var adid = uniqid(title);
-  console.log(adid);
   db("mega_projects")
     .insert({
       title: title,
-      description: desc,
+      description: description,
       url: url,
       date: Date(),
       images: images,
       projectid: adid,
-      tags: tags,
-      post_type: post_type,
+      tech_used: tech,
     })
     .then((response) => {
       res.json("successfully created");
