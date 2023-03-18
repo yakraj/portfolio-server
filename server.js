@@ -63,13 +63,13 @@ app.use(ignoreFavicon);
 
 app.get("/", (req, res) => {
   var data = [];
-  // axios
-  //   .get("https://www.ipinfo.io/106.216.254.229?token=ca553a36187af5")
-  //   .then(function (response) {
-  //     res.json([response.data]);
-  //   });
+  axios
+    .get("https://www.ipinfo.io/106.216.254.229?token=ca553a36187af5")
+    .then(function (response) {
+      res.json([response.data]);
+    });
 
-  res.json("hi there");
+  // res.json("hi there");
   // console.log(data);
   // fetch("https://quotes.toscrape.com/random")
   //   .then((response) => response.text())
