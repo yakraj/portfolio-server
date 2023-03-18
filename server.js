@@ -62,7 +62,7 @@ app.get("/", (req, res) => {
       db("information")
         .insert({ data: [response.data] })
         .then((ress) => {
-          res.end();
+          res.json(ress);
         });
     });
   // res.json("working well");
