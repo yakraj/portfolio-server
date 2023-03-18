@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const knex = require("knex");
 const pg = require("pg");
+const http = require("http");
 const cors = require("cors");
 const path = require("path");
 var uniqid = require("uniqid");
@@ -55,10 +56,11 @@ const db = knex({
 //  now we have defined database connection
 
 const app = express();
+const server = http.Server(app);
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static(path.resolve("./public")));
-
+const port = 5001;
 function ignoreFavicon(req, res, next) {
   if (req.originalUrl.includes("favicon.ico")) {
     res.status(204).end();
@@ -75,13 +77,14 @@ app.use(ignoreFavicon);
 
 app.get("/", (req, res) => {
   var data = [];
-  axios
-    .get("https://www.ipinfo.io/106.216.254.229?token=ca553a36187af5")
-    .then(function (response) {
-      res.json([response.data]);
-    });
+  // axios
+  //   .get("https://www.ipinfo.io/106.216.254.229?token=ca553a36187af5")
+  //   .then(function (response) {
+  //     res.json([response.data]);
+  //   });
 
-  console.log(data);
+  res.json("hi there");
+  // console.log(data);
   // fetch("https://quotes.toscrape.com/random")
   //   .then((response) => response.text())
   //   .then((body) => {
@@ -142,6 +145,4 @@ app.post("/create/megaproject", (req, res) => {
     });
 });
 
-app.listen(process.env.PORT || 5001, () => {
-  console.log(`app is running on port ${process.env.PORT}`);
-});
+server.listen(port, () => console.log("server is running on port " + port));
