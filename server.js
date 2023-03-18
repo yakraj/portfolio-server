@@ -55,6 +55,9 @@ function ignoreFavicon(req, res, next) {
 app.use(ignoreFavicon);
 
 app.get("/", (req, res) => {
+  const clientIpAddress =
+    req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  console.log(clientIpAddress);
   // axios
   //   .get("https://ipinfo.io/json?token=ca553a36187af5")
   //   .then(function (response) {
@@ -70,7 +73,7 @@ app.get("/", (req, res) => {
   //   });
   // res.json("working well");
 
-  res.json(req.ip);
+  res.json(clientIpAddress);
 });
 
 app.post("/create/smallproject", (req, res) => {
