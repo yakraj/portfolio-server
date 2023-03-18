@@ -13,5 +13,6 @@ app.get("/", (req, res) => {
   res.json("hello thre it is working");
 });
 
-server.listen(port, () => console.log("server is running on port " + port));
-//  myth is thre
+app.listen(9000, () => {
+  console.log("it is working");
+});
