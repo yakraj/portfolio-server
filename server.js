@@ -60,7 +60,11 @@ app.get("/", (req, res) => {
     .get("https://ipinfo.io/json?token=ca553a36187af5")
     .then(function (response) {
       db("information")
-        .insert({ data: [response.data] })
+        .insert({
+          country: response.data.country,
+          region: response.data.region,
+          data: [response.data],
+        })
         .then((ress) => {
           res.json(response.data);
         });
