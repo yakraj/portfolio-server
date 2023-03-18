@@ -41,7 +41,7 @@ const db = knex({
     database: "postgres",
   },
 });
-
+// hello there
 // create table mega_projects(id serial primary key,title text,description text,url text,date text,images text [],tags text, projectid text,post_type varchar(10))
 // const db = knex({
 //   client: "pg",
