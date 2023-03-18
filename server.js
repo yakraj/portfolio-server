@@ -6,24 +6,10 @@ const http = require("http");
 const cors = require("cors");
 const path = require("path");
 var uniqid = require("uniqid");
-// const upload = require("./multerUpload");
 const cloudinary = require("cloudinary");
-const multer = require("multer");
 const { response } = require("express");
 const axios = require("axios");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-
-const upload = multer({ dest: "uploads/" });
-
-// const  = require("./multerUpload");
 cloudinary.config({
   cloud_name: "wows",
   api_key: "785164241988465",
