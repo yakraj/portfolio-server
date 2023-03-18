@@ -58,22 +58,19 @@ app.get("/", (req, res) => {
   const clientIpAddress =
     req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   console.log(clientIpAddress);
-  // axios
-  //   .get("https://ipinfo.io/json?token=ca553a36187af5")
-  //   .then(function (response) {
-  //     db("information")
-  //       .insert({
-  //         country: response.data.country,
-  //         region: response.data.region,
-  //         data: [response.data],
-  //       })
-  //       .then((ress) => {
-  //         res.json(response.data);
-  //       });
-  //   });
-  // res.json("working well");
-
-  res.json(clientIpAddress);
+  axios
+    .get(`https://ipinfo.io/${clientIpAddress}?token=ca553a36187af5`)
+    .then(function (response) {
+      db("information")
+        .insert({
+          country: response.data.country,
+          region: response.data.region,
+          data: [response.data],
+        })
+        .then((ress) => {
+          res.end();
+        });
+    });
 });
 
 app.post("/create/smallproject", (req, res) => {
