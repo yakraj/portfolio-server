@@ -103,7 +103,7 @@ app.get("/megaproject", (req, res) => {
     .then((response) => res.json(response));
 });
 app.post("/create/megaproject", (req, res) => {
-  var { title, description, url, tech, images } = req.body;
+  var { title, description, url, tech, images,web_type } = req.body;
   var adid = uniqid(title);
   db("mega_projects")
     .insert({
@@ -114,6 +114,7 @@ app.post("/create/megaproject", (req, res) => {
       images: images,
       projectid: adid,
       tech_used: tech,
+      web_type: web_type ? web_type : 'design'
     })
     .then((response) => {
       res.json("successfully created");
