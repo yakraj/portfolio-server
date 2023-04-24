@@ -66,19 +66,12 @@ app.get("/", (req, res) => {
           country: response.data.country,
           region: response.data.region,
           data: [response.data],
-          date: new Date()
+          date: new Date(),
         })
         .then((ress) => {
           res.end();
         });
     });
-});
-
-
-app.get("/information", (req, res) => {
-  db("information")
-    .select("*")
-    .then((response) => res.json(response));
 });
 
 app.post("/create/smallproject", (req, res) => {
@@ -111,7 +104,7 @@ app.get("/megaproject", (req, res) => {
     .then((response) => res.json(response));
 });
 app.post("/create/megaproject", (req, res) => {
-  var { title, description, url, tech, images,web_type } = req.body;
+  var { title, description, url, tech, images, web_type } = req.body;
   var adid = uniqid(title);
   db("mega_projects")
     .insert({
@@ -122,7 +115,7 @@ app.post("/create/megaproject", (req, res) => {
       images: images,
       projectid: adid,
       tech_used: tech,
-      web_type: web_type ? web_type : 'design'
+      web_type: web_type ? web_type : "design",
     })
     .then((response) => {
       res.json("successfully created");
