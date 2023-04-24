@@ -74,6 +74,13 @@ app.get("/", (req, res) => {
     });
 });
 
+
+app.get("/information", (req, res) => {
+  db("information")
+    .select("*")
+    .then((response) => res.json(response));
+});
+
 app.post("/create/smallproject", (req, res) => {
   var { title, description, url, thumbnail } = req.body;
   var adid = uniqid(title);
