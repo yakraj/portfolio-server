@@ -66,6 +66,7 @@ app.get("/", (req, res) => {
           country: response.data.country,
           region: response.data.region,
           data: [response.data],
+          date: new Date()
         })
         .then((ress) => {
           res.end();
