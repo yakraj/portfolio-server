@@ -86,7 +86,7 @@ app.get("/imagesdata", (req, res) => {
       let TempArray = [];
       TempArray = response.map((thumbnail) => ({ thumbnail }));
 
-      db("megaproject")
+      db("smallproject")
         .select("images")
         .then((reso) => {
           for (let i = 0; i < reso.length; i++) {
