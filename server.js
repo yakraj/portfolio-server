@@ -84,7 +84,7 @@ app.get("/imagesdata", (req, res) => {
     .select("images")
     .then((response) => {
       var temparray = [];
-      array.map((x) => {
+      response.map((x) => {
         let temdata = [];
         temdata = x.images.map((thumbnail) => ({ thumbnail }));
         temparray = [...temparray, ...temdata];
