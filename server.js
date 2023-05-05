@@ -80,14 +80,14 @@ app.get("/information", (req, res) => {
     .then((response) => res.json(response));
 });
 app.get("/imagesdata", (req, res) => {
-  db("megaproject")
+  db("mega_projects")
     .select("images")
     .then((response) => {
       let TempArray = [];
       TempArray = response.map((thumbnail) => ({ thumbnail }));
 
-      db("smallproject")
-        .select("images")
+      db("small_projects")
+        .select("thumbnail")
         .then((reso) => {
           for (let i = 0; i < reso.length; i++) {
             TempArray.push(resp[i]);
