@@ -79,6 +79,24 @@ app.get("/information", (req, res) => {
     .select("*")
     .then((response) => res.json(response));
 });
+app.get("/imagesdata", (req, res) => {
+  db("megaproject")
+    .select("images")
+    .then((response) => {
+      let TempArray = [];
+      TempArray = response.map((thumbnail) => ({ thumbnail }));
+
+      db("megaproject")
+        .select("images")
+        .then((reso) => {
+          for (let i = 0; i < reso.length; i++) {
+            TempArray.push(resp[i]);
+          }
+          res.json(TempArray);
+        });
+    });
+});
+
 app.post("/create/smallproject", (req, res) => {
   var { title, description, url, thumbnail } = req.body;
   var adid = uniqid(title);
