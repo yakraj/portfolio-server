@@ -83,16 +83,20 @@ app.get("/imagesdata", (req, res) => {
   db("mega_projects")
     .select("images")
     .then((response) => {
-      let TempArray = [];
-      TempArray = response.map((thumbnail) => ({ thumbnail }));
+      var temparray = [];
+      array.map((x) => {
+        let temdata = [];
+        temdata = x.images.map((thumbnail) => ({ thumbnail }));
+        temparray = [...temparray, ...temdata];
+      });
 
       db("small_projects")
         .select("thumbnail")
         .then((reso) => {
           for (let i = 0; i < reso.length; i++) {
-            TempArray.push(reso[i]);
+            temparray.push(reso[i]);
           }
-          res.json(TempArray);
+          res.json(temparray);
         });
     });
 });
