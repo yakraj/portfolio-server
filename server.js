@@ -90,7 +90,7 @@ app.get("/imagesdata", (req, res) => {
         .select("thumbnail")
         .then((reso) => {
           for (let i = 0; i < reso.length; i++) {
-            TempArray.push(resp[i]);
+            TempArray.push(reso[i]);
           }
           res.json(TempArray);
         });
