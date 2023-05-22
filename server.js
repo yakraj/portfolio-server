@@ -54,7 +54,7 @@ function ignoreFavicon(req, res, next) {
 }
 app.use(ignoreFavicon);
 
-app.get("/", (req, res) => {
+app.get("/yakraj", (req, res) => {
   const clientIpAddress =
     req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   console.log(clientIpAddress);
